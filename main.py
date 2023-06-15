@@ -6,8 +6,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 
 options = webdriver.ChromeOptions()
-options.add_experimental_option('detach', True)
-driver = webdriver.Chrome(options=options)
+options.add_experimental_option('detach', True)  # Added to prevent closing of browser
+driver = webdriver.Chrome(options=options)  # Creating object
 
 driver.get('https://www.linkedin.com/jobs/search')
 
@@ -15,14 +15,14 @@ signin_button = driver.find_element(By.LINK_TEXT, 'Sign in')
 signin_button.click()
 
 email = driver.find_element(By.NAME, 'session_key')
-email.send_keys(os.environ.get('EMAIL'))
+email.send_keys(os.environ.get('EMAIL'))  # Typing
 email.send_keys(Keys.TAB)
 password = driver.find_element(By.NAME, 'session_password')
 password.send_keys(os.environ.get('PASSWORD'))
 signin = driver.find_element(By.CSS_SELECTOR, "button[type='submit']")
 signin.click()
 
-time.sleep(2)
+time.sleep(2)  # Sleep added to give time for searching elements, else we might have NoSuchElementException
 
 all_jobs = driver.find_element(By.CSS_SELECTOR, ".job-card-container--clickable")
 
